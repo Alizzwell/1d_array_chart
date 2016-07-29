@@ -1,7 +1,7 @@
 
 
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 1200 - margin.left - margin.right,
+    width = 700 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 
@@ -99,22 +99,33 @@ function update(arr) {
 		//.each("start", function(d, i) { if (i == 0) $("#step").prop("disabled", true); })
 		//.each("end", function(d, i) { if (i == 0) $("#step").prop("disabled", false); });
 
-	//arr.push(indexes.length * 10);
-	//indexes.push(indexes.length);
-	//x.domain(indexes);
-	//y.domain([0, d3.max(arr)]);
-    //
-    //svg.append("g")
-    //    .attr("class", "x axis")
-    //    .attr("transform", "translate(0," + height + ")")
-    //    .call(xAxis);
+	arr.push(indexes.length * 10);
+	indexes.push(indexes.length);
+	x.domain(indexes);
+	y.domain([0, d3.max(arr)]);
+    
+	var temp = d3.select("body").transition().duration(duration);
+	
+    temp.select(".x.axis")
+        .call(xAxis);
+		
+	temp.selectAll(".bar")
+        //.data(arr)
+        .attr("x", function(d, i) { return x(i); })
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d); })
+        .attr("height", function(d) { return height - y(d); });
+		
+	
 		
     svg.selectAll(".bar")
         .data(arr)
+		.enter().append("rect")
 		.transition()
-		.duration(duration)
-    //    .attr("x", function(d, i) { return x(i); })
-    /    .attr("width", x.rangeBand())
+		.duration()
+		.attr("class", "bar")
+        .attr("x", function(d, i) { return x(i); })
+        .attr("width", x.rangeBand())
         .attr("y", function(d) { return y(d); })
         .attr("height", function(d) { return height - y(d); });
 	
