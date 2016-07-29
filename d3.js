@@ -1,7 +1,7 @@
 
 
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 1200 - margin.left - margin.right,
+    width = 800 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 
@@ -114,7 +114,7 @@ function update(arr) {
 		.transition()
 		.duration(duration)
     //    .attr("x", function(d, i) { return x(i); })
-    /    .attr("width", x.rangeBand())
+        .attr("width", x.rangeBand())
         .attr("y", function(d) { return y(d); })
         .attr("height", function(d) { return height - y(d); });
 	
